@@ -25,7 +25,7 @@ def calc_angle(a, b, c):
     theta = 180 - np.degrees(theta)    # Convert radians to degrees
     return np.round(theta, 2)
 
-def count_bicep_curls(video_path, correct_left=0, correct_right=0, incorrect_left=0, incorrect_right=0):
+def count_bicep_curls(video_path=None, correct_left=0, correct_right=0, incorrect_left=0, incorrect_right=0):
     mp_drawing = mp.solutions.drawing_utils
     mp_drawing = mp.solutions.drawing_utils
     mp_pose = mp.solutions.pose
@@ -140,15 +140,32 @@ def count_bicep_curls(video_path, correct_left=0, correct_right=0, incorrect_lef
     cv2.destroyAllWindows()
     
     total_correct_count = correct_left_count + correct_right_count
-    total_incorrect_count = incorrct_left_count + incorrct_right_count
+    total_incorrect_count = incorrct_right_count + incorrct_left_count
+
+    if total_correct_count == 0 and total_incorrect_count == 0:
+        return  # No counts provided, so return without printing accuracy and incorrect info
 
     correct_accuracy = (total_correct_count / (correct_left + correct_right)) * 100 if (correct_left + correct_right) != 0 else 100
     incorrect_accuracy = (total_incorrect_count / (incorrect_left + incorrect_right)) * 100 if (incorrect_left + incorrect_right) != 0 else 100
 
+    print("Accuracy of Correct Counts: {:.2f}%".format(correct_accuracy))
+    print("Accuracy of Incorrect Counts: {:.2f}%".format(incorrect_accuracy))
+
+    if total_incorrect_count > 0:
+        print("Incorrect Left Info:")
+        for info in incorrect_left_info:
+            print("Count: {}, Flag: {}, Angle: {}".format(info[0], info[1], info[2]))
+
+        print("Incorrect Right Info:")
+        for info in incorrect_right_info:
+            print("Count: {}, Flag: {}, Angle: {}".format(info[0], info[1], info[2]))
     
 
 if __name__ == '__main__':
-    if len(sys.argv) == 2:
+    
+    if len(sys.argv) == 1:
+       count_bicep_curls(video_path=0)  # 0 for webcam
+    elif len(sys.argv) == 2:
         video_path = sys.argv[1]
         count_bicep_curls(video_path)
     elif len(sys.argv) == 6:
@@ -160,5 +177,6 @@ if __name__ == '__main__':
         count_bicep_curls(video_path, correct_left, correct_right, incorrect_left, incorrect_right)
     else:
         print("Usage:")
-        print("For running without analysis: python app.py dataset/Bicep.mp4")
+        print("For running without analysis: python app.py")  # No arguments for webcam
+        print("For running without analysis: python app.py dataset/Bicep.mp4") # for example
         print("For running with analysis: python app.py dataset/Bicep.mp4 <correct_left_count> <correct_right_count> <incorrect_left_count> <incorrect_right_count>")
