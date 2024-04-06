@@ -4,16 +4,7 @@ import numpy as np
 import mediapipe as mp
 
 def calc_angle(a, b, c):
-    ''' 
-    Calculate the angle between three points.
     
-    Arguments:
-        a,b,c -- Values (x,y,z, visibility) of the three points a, b, and c which will be used to calculate the
-                vectors ab and bc where 'b' will be 'elbow', 'a' will be shoulder and 'c' will be wrist.
-        
-    Returns:
-        theta : Angle in degrees between the lines joined by coordinates (a,b) and (b,c)
-    '''
     a = np.array([a.x, a.y])    # Reduce 3D point to 2D
     b = np.array([b.x, b.y])    # Reduce 3D point to 2D
     c = np.array([c.x, c.y])    # Reduce 3D point to 2D
@@ -142,7 +133,7 @@ def count_bicep_curls(video_path=None, correct_left=0, correct_right=0, incorrec
     total_correct_count = correct_left_count + correct_right_count
     total_incorrect_count = incorrct_right_count + incorrct_left_count
 
-    if total_correct_count == 0 and total_incorrect_count == 0:
+    if correct_left + correct_right == 0 and incorrect_left + incorrect_right == 0:
         return  # No counts provided, so return without printing accuracy and incorrect info
 
     correct_accuracy = (total_correct_count / (correct_left + correct_right)) * 100 if (correct_left + correct_right) != 0 else 100
