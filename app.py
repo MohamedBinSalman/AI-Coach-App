@@ -9,23 +9,31 @@ def calc_angle(a, b, c):
     b = np.array([b.x, b.y])    # Reduce 3D point to 2D
     c = np.array([c.x, c.y])    # Reduce 3D point to 2D
 
+    #These vectors represent the line segments connecting points a, b, and c.
     ab = np.subtract(a, b)
     bc = np.subtract(b, c)
     
-    theta = np.arccos(np.dot(ab, bc) / (np.linalg.norm(ab) * np.linalg.norm(bc)))     # A.B = |A||B|cos(x) where x is the angle b/w A and B
+    # A.B = |A||B|cos(x) where x is the angle b/w A and B
+    theta = np.arccos(np.dot(ab, bc) / (np.linalg.norm(ab) * np.linalg.norm(bc)))     
     theta = 180 - np.degrees(theta)    # Convert radians to degrees
     return np.round(theta, 2)
 
 def count_bicep_curls(video_path=None, correct_left=0, correct_right=0, incorrect_left=0, incorrect_right=0):
+
+    #initializes the MediaPipe utilities for drawing, 
+    #sets up variables to keep track of counts and flags for correct and incorrect curls for both the left and right arms
+
     mp_drawing = mp.solutions.drawing_utils
     mp_drawing = mp.solutions.drawing_utils
     mp_pose = mp.solutions.pose
 
+     # left arm
     incorrect_left_flag = 'up'
     incorrct_left_count = 0
     correct_left_count = 0
     incorrect_left_info = []
-    
+     
+      # right arm
     incorrect_right_flag = 'up'
     incorrct_right_count = 0
     correct_right_count = 0
@@ -59,46 +67,60 @@ def count_bicep_curls(video_path=None, correct_left=0, correct_right=0, incorrec
             
             left_angle = calc_angle(left_shoulder, left_elbow, left_wrist)
             right_angle = calc_angle(right_shoulder, right_elbow, right_wrist)
+
+
             
             # Count left bicep curls
             if left_angle > 150:
                 incorrect_left_flag = 'down'
+                correct_left_flag = 'down'
+                test = False
+                print(left_angle)
             
             if left_angle < 150 and left_angle > 60 and test == True:
                 incorrect_left_flag = 'up'
+                print(left_angle)
+                
 
             if left_angle < 60 and incorrect_left_flag == 'up':
                 incorrct_left_count += 1
+                print( "incorrect:",left_angle)
                 incorrect_left_info.append((incorrct_left_count, incorrect_left_flag, left_angle))
                 incorrect_left_flag = 'down'
                 test = True
-                
-                    
-            if left_angle > 150:
-                correct_left_flag='down'
+           
             if left_angle < 60 and correct_left_flag == 'down':  
                 correct_left_count += 1
+                print( "correct:",left_angle)
                 correct_left_flag = 'up'
+                test = True
 
+
+
+            
             # Count right bicep curls
             if right_angle > 150:
                 incorrect_right_flag = 'down'
-            
+                correct_right_flag='down'
+                test = False
+
             if right_angle < 150 and right_angle > 60 and test == True:
                 incorrect_right_flag = 'up'
+                
 
             if right_angle < 60 and incorrect_right_flag == 'up':
                 incorrct_right_count += 1
+               
                 incorrect_right_info.append((incorrct_right_count, incorrect_right_flag, right_angle))
                 incorrect_right_flag = 'down'
                 test = True
                 
-                    
-            if right_angle > 150:
-                correct_right_flag='down'
-            if right_angle < 60 and correct_right_flag == 'down':  
+                
+            if right_angle < 60 and correct_right_flag == 'down': 
+                print( "correct:",right_angle)
                 correct_right_count += 1
                 correct_right_flag = 'up'
+                test = True
                  
         except Exception as e:
             print(f"Error processing frame: {e}")
