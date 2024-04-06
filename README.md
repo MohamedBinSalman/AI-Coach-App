@@ -32,6 +32,12 @@ pip install -r requirements.txt
 
 ## Usage
 
+### Running with webcam
+
+```bash
+python app.py 
+```
+
 ### Running without analysis
 
 ```bash
