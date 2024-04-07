@@ -6,7 +6,7 @@ The Bicep Curl Counter project utilizes Mediapipe's Pose Estimation Model Blazep
 Specifically, the 3D coordinates of the wrist, elbow, and shoulder keypoints are extracted to monitor the movement of the arms during bicep curls.
 
 ## Demo
-The Following GIF shows how the project work:
+The Following GIF shows how the project works:
 
 ![output demo](https://github.com/MohamedBinSalman/AI-Coach-App/blob/main/output/output.gif)
 
