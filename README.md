@@ -52,7 +52,7 @@ python app.py dataset/Bicep.mp4 <correct_left_count> <correct_right_count> <inco
 
 ### Note
 
- Press 'r' key to reset the counter anytime and 'Esc' to quit.
+ Press 'q' key to quit from app.
 
 
 
