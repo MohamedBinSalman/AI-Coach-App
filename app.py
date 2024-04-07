@@ -72,28 +72,24 @@ def count_bicep_curls(video_path=None, correct_left=0, correct_right=0, incorrec
             
             # Count left bicep curls
             if left_angle > 150:
-                incorrect_left_flag = 'down'
-                correct_left_flag = 'down'
-                test = False
-                print(left_angle)
+                incorrect_left_flag = 'down'  
             
             if left_angle < 150 and left_angle > 60 and test == True:
                 incorrect_left_flag = 'up'
-                print(left_angle)
                 
-
+                
             if left_angle < 60 and incorrect_left_flag == 'up':
                 incorrct_left_count += 1
-                print( "incorrect:",left_angle)
                 incorrect_left_info.append((incorrct_left_count, incorrect_left_flag, left_angle))
                 incorrect_left_flag = 'down'
                 test = True
            
+            if  left_angle > 150:
+                correct_left_flag = 'down'
             if left_angle < 60 and correct_left_flag == 'down':  
                 correct_left_count += 1
-                print( "correct:",left_angle)
                 correct_left_flag = 'up'
-                test = True
+                test = False
 
 
 
@@ -101,26 +97,24 @@ def count_bicep_curls(video_path=None, correct_left=0, correct_right=0, incorrec
             # Count right bicep curls
             if right_angle > 150:
                 incorrect_right_flag = 'down'
-                correct_right_flag='down'
-                test = False
-
+                
             if right_angle < 150 and right_angle > 60 and test == True:
                 incorrect_right_flag = 'up'
                 
-
+            
             if right_angle < 60 and incorrect_right_flag == 'up':
                 incorrct_right_count += 1
-               
                 incorrect_right_info.append((incorrct_right_count, incorrect_right_flag, right_angle))
                 incorrect_right_flag = 'down'
                 test = True
-                
-                
-            if right_angle < 60 and correct_right_flag == 'down': 
-                print( "correct:",right_angle)
+
+            if  right_angle > 150:
+                correct_right_flag = 'down'
+           
+            if right_angle < 60 and correct_right_flag == 'down':  
                 correct_right_count += 1
                 correct_right_flag = 'up'
-                test = True
+                test = False
                  
         except Exception as e:
             print(f"Error processing frame: {e}")
