@@ -50,9 +50,7 @@ python app.py dataset/Bicep.mp4
 python app.py dataset/Bicep.mp4 <correct_left_count> <correct_right_count> <incorrect_left_count> <incorrect_right_count>
 ```
 
-### Note
 
- Press 'q' key to quit from app.
 
 
 
@@ -61,6 +59,13 @@ python app.py dataset/Bicep.mp4 <correct_left_count> <correct_right_count> <inco
 - Real-time visualization of bicep curls count and correctness analysis.
 - Supports both left and right bicep curl counts.
 - Tracks angles of shoulder, elbow, and wrist for accurate counting.
+
+
+## Project Details 
+
+Check out the following link to see a walkthrough of the project, including a presentation and code explanation.
+[Click here!](https://drive.google.com/file/d/1AwfLSHKh9_AAeYGBisp1oQ0UKX1m695i/view?usp=drivesdk)
+
 
 
 
